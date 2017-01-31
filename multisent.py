@@ -1,12 +1,14 @@
-## Author: Jessy Li (ljunyi@seas.upenn.edu)
+# Author: Jessy Li (ljunyi@seas.upenn.edu)
 
-## An interface for running on text files and lists of sentences
+# An interface for running on text files and lists of sentences
 
 from nltk.tokenize import sent_tokenize, word_tokenize
 from util.texthelper import cleanup
 import speciteller
 
-import argparse, os
+import argparse
+import os
+
 
 def multisent_specificity(sentlst, per_sent=False):
     '''Specificity of more than one sentence is:
@@ -21,17 +23,18 @@ def multisent_specificity(sentlst, per_sent=False):
     preds = speciteller.run("sents", sentlst)
     for (s, p) in zip(sentlst, preds):
         ntkn = float(len(s.split()))
-        spec += p*ntkn
+        spec += p * ntkn
         tkns += ntkn
         if per_sent:
             per_sent_spec.append(p)
     if per_sent:
-        return spec/tkns, per_sent_spec
+        return spec / tkns, per_sent_spec
     else:
-        return spec/tkns
+        return spec / tkns
 
-def run_text(inputfile, do_sent_tokenization, do_word_tokenization, per_sent, 
-             cleanup_text = False):
+
+def run_text(inputfile, do_sent_tokenization, do_word_tokenization, per_sent,
+             cleanup_text=False):
     '''an interface for running an article
     '''
     prep = []
@@ -55,24 +58,25 @@ def run_text(inputfile, do_sent_tokenization, do_word_tokenization, per_sent,
     else:
         return None, None
 
+
 def run_dir(inputdir, outputdir, do_sent_tokenization, do_word_tokenization,
-            cleanup_text = False):
+            cleanup_text=False):
     '''run speciteller on the entire directory; each file in it is a plain text file.
     output is named <input_file_name>.spec, one score per line, with document specificity
     on top. <doc/sentid>\tscore\n
     '''
     for filebase in os.listdir(inputdir):
         infile = os.path.join(inputdir, filebase)
-        outfile = os.path.join(outputdir, filebase+".spec")
+        outfile = os.path.join(outputdir, filebase + ".spec")
         if not os.path.exists(outfile):
-            print "Processing "+infile
+            print "Processing " + infile
             allspec, sentspec = run_text(infile, do_sent_tokenization,
                                          do_word_tokenization, cleanup_text)
             if allspec is not None:
                 with open(outfile, 'w') as f:
-                    f.write("doc\t"+str(allspec)+"\n")
-                    for i,sspec in enumerate(sentspec):
-                        f.write(str(i)+"\t"+str(sspec)+"\n")
+                    f.write("doc\t" + str(allspec) + "\n")
+                    for i, sspec in enumerate(sentspec):
+                        f.write(str(i) + "\t" + str(sspec) + "\n")
 
 if __name__ == "__main__":
     # print run_text("/nlp/users/louis-nenkova/corpus-v2/BST-goodAvgBad-research/1999_01_03_1074147.txt", True, True)
@@ -85,4 +89,3 @@ if __name__ == "__main__":
     args = argparser.parse_args()
     print args
     run_dir(args.inputdir, args.outputdir, args.sent_tokenize, args.word_tokenize, args.cleanup)
-
