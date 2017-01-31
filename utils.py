@@ -3,7 +3,6 @@
 from collections import namedtuple, Counter
 from math import log
 import os
-import gzip
 import numpy as np
 
 RT = "./"
@@ -12,7 +11,7 @@ MPQAFILE = RT + "resources/subjclueslen1-HLTEMNLP05.tff"
 MRCFILE = RT + "resources/mrc2.dct"
 GENINQFILE = RT + "resources/inquirerTags.txt"
 BROWNCLUSFILE = RT + "resources/brown-rcv1.clean.tokenized-CoNLL03.txt-c100-freq1.txt"
-NEURALVECFILE = RT + "resources/embeddings-scaled.EMBEDDING_SIZE=100.txt.gz"
+NEURALVECFILE = RT + "resources/embeddings-scaled.EMBEDDING_SIZE-100.txt"
 CONNFILE = RT + "data/connectives.txt"
 IDF_FILE = RT + "data/nyt2006.idf.txt"
 IDF_FILE2 = RT + "data/nyt2006.idf.lower.txt"
@@ -70,7 +69,7 @@ def readMetaOptimizeBrownCluster():
 
 def readMetaOptimizeEmbeddings():
     print "loading word embeddings..."
-    f = gzip.open(NEURALVECFILE, 'rb')
+    f = open(NEURALVECFILE)
     embdict = {}
     counter = 0
     for line in f:
