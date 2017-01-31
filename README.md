@@ -13,7 +13,28 @@ Speciteller is implemented using Python 2.7. It depends on the following package
 
 ## Data and resources
 
-Word lexicons for the models are available for download [here](http://www.cis.upenn.edu/~nlp/software/speciteller.html). Please note that these resources come with license(s). Decompress the tar ball under this (i.e., the speciteller) directory.
+Latest word lexicons for the models are available for download from [here](http://www.cis.upenn.edu/~nlp/software/speciteller.html).
+Please note that these resources come with license(s).
+
+To install, run the following in the root directory (the same directory as this README).
+
+```shell
+curl -sL https://github.com/chbrown/speciteller/releases/download/v0.0.1/speciteller_data_fix.tar.gz | tar x
+```
+
+This will extract the required files into the following structure:
+
+    data/
+    ├── connectives.txt
+    ├── nltkstopwords.txt
+    ├── nyt2006.idf.lower.txt
+    └── nyt2006.idf.txt
+    resources/
+    ├── brown-rcv1.clean.tokenized-CoNLL03.txt-c100-freq1.txt
+    ├── embeddings-scaled.EMBEDDING_SIZE-100.txt
+    ├── inquirerTags.txt
+    ├── mrc2.dct
+    └── subjclueslen1-HLTEMNLP05.tff
 
 
 ## Running Speciteller
